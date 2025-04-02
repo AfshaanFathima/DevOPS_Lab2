@@ -5,9 +5,18 @@ pool:
   name: 'SelfHosted'
 
 steps:
+- checkout: self
+  submodules: true 
+
+- script: |
+    echo "Listing files in the working directory:"
+    dir $(Build.SourcesDirectory)  # Lists files in the source directory
+  displayName: 'List files in source directory'
+
+
 - task: Maven@3
   inputs:
-    mavenPomFile: 'Devops/happytails/pom.xml'  # Updated path
+    mavenPomFile: '$(Build.SourcesDirectory)/Devops/happytails/pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.17'
